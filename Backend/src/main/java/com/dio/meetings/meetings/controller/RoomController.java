@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 public class RoomController {
 
     @Autowired
@@ -25,11 +25,12 @@ public class RoomController {
         return roomRepository.findAll();
     }
 
+    @GetMapping("/rooms/{id}")
     public ResponseEntity<Room> getRoomById(@PathVariable(value = "id") long roomId)
             throws ResourceNotFoundException{
-            Room room = roomRepository.findById(roomId)
-                    .orElseThrow(() -> new ResourceNotFoundException("Room not found: " + roomId));
-            return ResponseEntity.ok().body(room);
+        Room room = roomRepository.findById(roomId)
+                .orElseThrow(() -> new ResourceNotFoundException("Room not found: " + roomId));
+        return ResponseEntity.ok().body(room);
 
     }
 
